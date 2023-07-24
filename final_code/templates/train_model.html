@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Generate Passwords</title>
+	<style>
+		h3{
+			position: relative;
+			left: 535px;
+			top : 40px;
+		}
+	div.myform{
+		position: relative;
+		left: 500px;
+		top : 100px;
+	}
+	#btn{
+		position: relative;
+		left: 545px;
+		top: 130px;
+	}
+	#p{
+		position: absolute;
+		left: 450px;
+		top: 450px;
+		width: 600px;
+  		height: 150px;
+
+	}
+</style>
+
+    <meta charset="UTF-8">
+    <title>Train Model</title>
+</head>
+<body>
+
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+		  <div class="navbar-header">
+			<a class="navbar-brand" href="">Home</a>
+		  </div>
+		  <ul class="nav navbar-nav">
+			<li><a href="http://127.0.0.1:5000/train_model">Train Model</a></li>
+			<li><a href="http://127.0.0.1:5000/generate_pwd">Generate Passwords</a></li>
+			<li><a href="http://127.0.0.1:5000/pwd_strength">Check Strength</a></li>
+		  </ul>
+		</div>
+	  </nav>
+	
+	<h3>Train model</h3>
+	<div class="myform">
+		<div class="form-group row">
+			<div class="col-xs-2">
+			<label for="model_name">Model Name:</label>
+			<input type="text" class="form-control" id="model_name">
+		</div> 
+		<br><br><br><br><br>
+		<div class="col-xs-2">
+			<label for="myfile">Choose input file for training:</label>
+			<input type="file" class="form-control" id="myfile">
+		</div> 
+	</div>
+	</div>
+		<button type="button" class="btn btn-success" onclick="obj.get_passwords()" id="btn">Train Model</button>
+
+	<script type="text/javascript" defer="">
+		var obj = {
+		get_passwords : function()
+		{
+			var file = document.getElementById("myfile")
+			var model_name = document.getElementById("model_name")
+			this.xhr = new XMLHttpRequest();
+			this.xhr.onreadystatechange = this.res;
+			this.xhr.open("GET","http://127.0.0.1:5000/train?INPUT_FILE_NAME="+file.files[0].name+"&model_name="+model_name.value,true);
+			this.xhr.send()
+		},
+		res : function()
+		{
+			if(this.readyState == 4 && this.status == 200)
+				{
+					result = ""
+					var res = JSON.parse(this.responseText)
+					for(i=0; i<res.length; ++i)
+					{
+						result += res[i]
+						result += "<br>"
+					}	
+
+					var element =  document.getElementById("p");
+					if (typeof(element) != 'undefined' && element != null)
+						{
+						}
+					else
+					{
+						var element = document.createElement("p")
+						element.id = "p"
+						document.body.appendChild(element)
+					}
+					element.innerHTML = result
+				}
+		}
+	}
+	</script>
+</body>
+</html>

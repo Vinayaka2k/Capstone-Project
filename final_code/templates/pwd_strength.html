@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Generate Passwords</title>
+	<style>
+		h3{
+			position: relative;
+			left: 480px;
+			top : 40px;
+		}
+	div.myform{
+		position: relative;
+		left: 500px;
+		top : 100px;
+	}
+	#btn{
+		position: relative;
+		left: 545px;
+		top: 130px;
+	}
+	#p{
+		position: absolute;
+		left: 550px;
+		top: 450px;
+		width: 600px;
+  		height: 150px;
+	}
+</style>
+
+    <meta charset="UTF-8">
+    <title>Check Password Strength</title>
+</head>
+<body>
+	
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+		  <div class="navbar-header">
+			<a class="navbar-brand" href="">Home</a>
+		  </div>
+		  <ul class="nav navbar-nav">
+			<li><a href="http://127.0.0.1:5000/train_model">Train Model</a></li>
+			<li><a href="http://127.0.0.1:5000/generate_pwd">Generate Passwords</a></li>
+			<li><a href="http://127.0.0.1:5000/pwd_strength">Check Strength</a></li>
+		  </ul>
+		</div>
+	  </nav>
+	
+	<h3>Check Password Strength</h3>
+	<div class="myform">
+		<div class="form-group row">
+			<div class="col-xs-2">
+			<label for="password">Password:</label>
+			<input type="text" class="form-control" id="password">
+		</div> 
+		<br><br><br><br><br>
+		<div class="col-xs-2">
+			<label for="model">Model Name:</label>
+			<input type="text" class="form-control" id="model">
+		</div> 
+	</div>
+	</div>
+		<button type="button" class="btn btn-success" onclick="obj.check_strength()" id="btn">Check Strength</button>
+
+<script type="text/javascript" defer="">
+    var obj = {
+	check_strength : function()
+	{
+        var password = document.getElementById("password")
+        var model = document.getElementById("model")
+		this.xhr = new XMLHttpRequest();
+		this.xhr.onreadystatechange = this.res;
+		this.xhr.open("GET","http://127.0.0.1:5000/evaluate?password="+password.value+"&GAN_MODEL_NAME_FOR_EVALUATION="+model.value,true);
+		this.xhr.send();
+	},
+	res : function()
+	{
+		if(this.readyState == 4 && this.status == 200)
+			{
+				result = this.responseText
+				var p_element =  document.getElementById("p");
+				if (typeof(p_element) != 'undefined' && p_element != null)
+					{
+						
+					}
+				else
+				{
+					var p_element = document.createElement("p")
+					p_element.id = "p"
+					document.body.appendChild(p_element)
+				}
+               
+			// 	if(result == "Strong")
+			// 	{
+			// 		p_element.style.color ="green"
+			// 		p_element.innerHTML = "Strong Password"
+			// 	}
+			// 	else if(result == "Weak")
+			// 	{
+			// 		p_element.style.color ="red"
+			// 		p_element.innerHTML = "Weak Password"
+			// 	}
+			// 	else
+			// 	{
+			// 		p_element.style.color ="orange"
+			// 		p_element.innerHTML = "Average Password"
+			// 	}
+				
+			 }
+			p_element.innerHTML =result
+	}
+}
+	
+
+</script>
+
+</body>
+</html>
+ 

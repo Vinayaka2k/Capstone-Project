@@ -1,0 +1,148 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <meta charset="UTF-8">
+        <title>Generate Passwords</title>
+        <style>
+            h3{
+                position: relative;
+                left: 480px;
+                top : 40px;
+            }
+        div.myform{
+            position: relative;
+            left: 500px;
+            top : 100px;
+        }
+        #btn{
+            position: relative;
+            left: 545px;
+            top: 130px;
+        }
+        #p{
+            position: absolute;
+            left: 550px;
+            top: 450px;
+            width: 600px;
+              height: 150px;
+        }
+    </style>
+    
+        <meta charset="UTF-8">
+        <title>Check Password Strength</title>
+    </head>
+    <body>
+	
+        <h3>Check Password Strength</h3>
+        <div class="myform">
+            <div class="form-group row">
+                <div class="col-xs-2">
+                <label for="password">Password:</label>
+                <input type="text" class="form-control" id="password">
+            </div> 
+            <br><br><br><br><br>
+            <div class="col-xs-2">
+                <label for="model">Model Name:</label>
+                <input type="text" class="form-control" id="model">
+            </div> 
+        </div>
+        </div>
+            <button type="button" class="btn btn-success" onclick="passCheck()" id="btn">Check Strength</button>
+    
+    <script type="text/javascript">
+   const input = document.getElementById('password')
+    
+  function setStrength(level) {
+  switch (level) {
+    case 0:
+      level = 'weak';
+      break;
+    case 1:
+      level = 'fair';
+      break;
+    case 2:
+      level = 'fair';
+      break;
+    case 3:
+      level = 'strong';
+      break;
+    default:
+      level = 'weak';
+      
+  }
+  return level
+}
+
+function passCheck() {
+  const password = input.value
+  const currentSrength = {
+    lengthScores: 0,
+    complexityScores: 0,
+    caseScores: 0
+  }
+  if (password.length < 4) {
+    currentSrength.lengthScores = 0;
+  } else if (password.length > 12) {
+    currentSrength.lengthScores = 1;
+  } else {
+    currentSrength.lengthScores = input.value.length / 20;
+  }
+  
+  if (password.match(/\d/g)) {
+    currentSrength.complexityScores += 0.3;
+  }
+  if (password.match(/[a-zA-Z]/g)) {
+    currentSrength.complexityScores += 0.35;
+  }
+  if (password.match(/[\W_]/g)) {
+    currentSrength.complexityScores += 0.4;
+  }
+  
+  if (password.match(/[a-z]/g)) {
+    currentSrength.caseScores += 0.5;
+  }
+  if (password.match(/[A-Z]/g)) {
+    currentSrength.caseScores += 0.5;
+  }
+  
+  const scores = Math.round(
+    currentSrength.lengthScores +
+    currentSrength.complexityScores +
+    currentSrength.caseScores
+  )
+  level=setStrength(scores);
+
+    var p_element =  document.getElementById("p");
+				if (typeof(p_element) != 'undefined' && p_element != null)
+					{
+					}
+				else
+				{
+					var p_element = document.createElement("p")
+					p_element.id = "p"
+					document.body.appendChild(p_element)
+				}
+               
+				if(level == "strong")
+				{
+					p_element.style.color ="green"
+					p_element.innerHTML = "Strong Password"
+				}
+				else if(level == "weak")
+				{
+					p_element.style.color ="red"
+					p_element.innerHTML = "Weak Password"
+				}
+				else
+				{
+					p_element.style.color ="orange"
+					p_element.innerHTML = "Average Password"
+				}
+}
+    </script>
+    </body>
+</html>

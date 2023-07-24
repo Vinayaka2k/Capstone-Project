@@ -1,0 +1,45 @@
+1)
+
+
+/gan
+
+return filenames of trained gan
+
+
+2)
+
+/g
+
+return filenames of trained gan
+
+3)
+
+/d
+
+return filenames of trained gan
+
+4)
+
+
+/evaluate/PASSWORD
+
+params : GET : GAN_MODEL_NAME_FOR_EVALUATION
+should be a filename
+
+return : Strength - float value
+
+5)
+
+/generate/SIZE
+
+params : GET : GAN_MODEL_NAME_FOR_GENERATION
+should be a filename
+
+return list of generated values
+
+6)
+
+/train
+
+params : GET : INPUT_FILE_PATH
+should be a filename
